@@ -2,11 +2,11 @@ import { AppProps } from 'next/app';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Web3ReactProvider } from '@web3-react/core';
-import theme from '../src/theme';
-import getLibrary from '../getLibrary';
+import theme from '~/src/theme';
+import getLibrary from '~/src/getLibrary';
 import { useEffect } from 'react';
 
-import '../styles/globals.css';
+import '~/src/styles/globals.css';
 
 function NextWeb3App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -19,13 +19,13 @@ function NextWeb3App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Web3ReactProvider getLibrary={getLibrary}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
-        </Web3ReactProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Web3ReactProvider>
     </>
   );
 }

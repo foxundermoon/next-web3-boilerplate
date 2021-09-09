@@ -1,9 +1,9 @@
 import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
 import Link from 'next/link';
-import Account from '../components/Account';
-import ETHBalance from '../components/ETHBalance';
-import useEagerConnect from '../hooks/useEagerConnect';
+import Account from '~/src/components/Account';
+import ETHBalance from '~/src/components/ETHBalance';
+import useEagerConnect from '~/src/hooks/useEagerConnect';
 
 function Home() {
   const { account, library } = useWeb3React();

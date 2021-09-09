@@ -1,24 +1,19 @@
-import MetaMaskOnboarding from "@metamask/onboarding";
-import { useWeb3React } from "@web3-react/core";
-import { UserRejectedRequestError } from "@web3-react/injected-connector";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { injected } from "../connectors";
-import useENSName from "../hooks/useENSName";
-import { formatEtherscanLink, shortenHex } from "../util";
+import MetaMaskOnboarding from '@metamask/onboarding';
+import { useWeb3React } from '@web3-react/core';
+import { UserRejectedRequestError } from '@web3-react/injected-connector';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { injected } from '~/src/connectors';
+import useENSName from '~/src/hooks/useENSName';
+import { formatEtherscanLink, shortenHex } from '~/src/util';
+import { Button } from '@material-ui/core';
+import Link from '~/src/components/link';
 
 type Props = {
   triedToEagerConnect: boolean;
 };
 
 const Account = ({ triedToEagerConnect }: Props) => {
-  const {
-    active,
-    error,
-    activate,
-    chainId,
-    account,
-    setError,
-  } = useWeb3React();
+  const { active, error, activate, chainId, account, setError } = useWeb3React();
 
   // initialize metamask onboarding
   const onboarding = useRef<MetaMaskOnboarding>();
@@ -46,16 +41,14 @@ const Account = ({ triedToEagerConnect }: Props) => {
     return null;
   }
 
-  if (typeof account !== "string") {
+  if (typeof account !== 'string') {
     const hasMetaMaskOrWeb3Available =
-      MetaMaskOnboarding.isMetaMaskInstalled() ||
-      (window as any)?.ethereum ||
-      (window as any)?.web3;
+      MetaMaskOnboarding.isMetaMaskInstalled() || (window as any)?.ethereum || (window as any)?.web3;
 
     return (
       <div>
         {hasMetaMaskOrWeb3Available ? (
-          <button
+          <Button
             onClick={() => {
               setConnecting(true);
 
@@ -69,29 +62,25 @@ const Account = ({ triedToEagerConnect }: Props) => {
               });
             }}
           >
-            {MetaMaskOnboarding.isMetaMaskInstalled()
-              ? "Connect to MetaMask"
-              : "Connect to Wallet"}
-          </button>
+            {MetaMaskOnboarding.isMetaMaskInstalled() ? 'Connect to MetaMask' : 'Connect to Wallet'}
+          </Button>
         ) : (
-          <button onClick={() => onboarding.current?.startOnboarding()}>
-            Install Metamask
-          </button>
+          <Button onClick={() => onboarding.current?.startOnboarding()}>Install Metamask</Button>
         )}
       </div>
     );
   }
 
   return (
-    <a
+    <Link
       {...{
-        href: formatEtherscanLink("Account", [chainId, account]),
-        target: "_blank",
-        rel: "noopener noreferrer",
+        href: formatEtherscanLink('Account', [chainId, account]),
+        target: '_blank',
+        rel: 'noopener noreferrer',
       }}
     >
       {ENSName || `${shortenHex(account, 4)}`}
-    </a>
+    </Link>
   );
 };
 
